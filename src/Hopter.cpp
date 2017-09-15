@@ -78,6 +78,7 @@ expansion.
 #  endif
 #else
 #  include "CString.hpp"
+#  include <string.h>
 #endif
 
 /* Example: This is an excerpt from boost::function_template.hpp
