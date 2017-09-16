@@ -4,7 +4,13 @@
 
 class BoxProcess {
 public:
-    BoxProcess(){}
+
+    BoxProcess()
+    {}
+
+    void run();
+
+private:
 
     typedef void(*Proc)(void);
     FUNCTOR_TYPEDEF(MemberProc, void);
@@ -12,42 +18,48 @@ public:
     MemberProc _proc[2];
     uint8_t counter = 0;
 
-    void _process_one()
-    {
-        printf("    Process one: %u\n", counter);
-    }
+    void _process_one();
+    void _process_two();
+    void register_process(MemberProc proc);
 
-    void _process_two()
-    {
-        printf("    Process two: %u\n", counter);
-    }
+};
 
-    void register_process(MemberProc proc)
-    {
-        static uint8_t pos = 0;
 
-        if (pos > 1) return;
-        _proc[pos] = proc;
-        pos++;
-    }
+void BoxProcess::_process_one()
+{
+    printf("    Process one: %u\n", counter);
+}
 
-    void run()
-    {
-        register_process(FUNCTOR_BIND_MEMBER(&BoxProcess::_process_one, void));
-        register_process(FUNCTOR_BIND_MEMBER(&BoxProcess::_process_two, void));
+void BoxProcess::_process_two()
+{
+    printf("    Process two: %u\n", counter);
+}
 
-        uint8_t sentinel = 0;
-        for (uint8_t i = 0; i < 10; i++) {
-            counter = i;
-            sentinel %= 2;
-            _proc[sentinel]();
-            sentinel++;
-            if (sentinel == 2) {
-                printf("\n");
-            }
+void BoxProcess::register_process(MemberProc proc)
+{
+    static uint8_t pos = 0;
+
+    if (pos > 1) return;
+    _proc[pos] = proc;
+    pos++;
+}
+
+void BoxProcess::run()
+{
+    register_process(FUNCTOR_BIND_MEMBER(&BoxProcess::_process_one, void));
+    register_process(FUNCTOR_BIND_MEMBER(&BoxProcess::_process_two, void));
+
+    uint8_t sentinel = 0;
+    for (uint8_t i = 0; i < 10; i++) {
+        counter = i;
+        sentinel %= 2;
+        _proc[sentinel]();
+        sentinel++;
+        if (sentinel == 2) {
+            printf("\n");
         }
     }
-};
+}
 
 BoxProcess boxprocess;
 
