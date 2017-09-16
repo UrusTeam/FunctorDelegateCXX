@@ -13,3 +13,4 @@ make
 ./HopterUrus ../include/FastFunctor.hxx FastFunctor.h
 cp FastFunctor.h ../
 cp FastDelegate.h ../
+make install
