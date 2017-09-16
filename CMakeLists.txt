@@ -13,8 +13,8 @@ set(HopterUrus_SRCS
     "${PROJECT_SOURCE_DIR}/src/HopterUrus.cpp"
 )
 
-set(test_SRCS
-    "${PROJECT_SOURCE_DIR}/src/test.cpp"
+set(testdelegate_SRCS
+    "${PROJECT_SOURCE_DIR}/src/testdelegate.cpp"
 )
 
 # add the binary tree to the search path for include files
@@ -22,13 +22,20 @@ include_directories (
     "${PROJECT_SOURCE_DIR}/include"
     "${PROJECT_BINARY_DIR}"
     "${PROJECT_SOURCE_DIR}"
-    )
+     )
 
 # add the executable
-add_executable(Hopter ${Hopter_SRCS})
 add_executable(HopterUrus ${HopterUrus_SRCS})
-add_executable(test ${test_SRCS})
+add_executable(Hopter ${Hopter_SRCS})
+add_executable(testdelegate ${testdelegate_SRCS})
 
-install(TARGETS Hopter HopterUrus test
+add_custom_command(TARGET HopterUrus
+                   POST_BUILD
+                   COMMAND ${PROJECT_BINARY_DIR}/HopterUrus ${PROJECT_SOURCE_DIR}/include/FastFunctor.hxx ${PROJECT_SOURCE_DIR}/FastFunctor.h)
+
+add_custom_command(TARGET Hopter
+                   POST_BUILD
+                   COMMAND ${PROJECT_BINARY_DIR}/Hopter ${PROJECT_SOURCE_DIR}/include/FastDelegate.hxx ${PROJECT_SOURCE_DIR}/FastDelegate.h)
+
+install(TARGETS Hopter HopterUrus testdelegate
         RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/install)
-

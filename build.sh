@@ -9,8 +9,5 @@ else
 fi
 
 make
-./Hopter ../include/FastDelegate.hxx FastDelegate.h
-./HopterUrus ../include/FastFunctor.hxx FastFunctor.h
-cp FastFunctor.h ../
-cp FastDelegate.h ../
+
 make install
