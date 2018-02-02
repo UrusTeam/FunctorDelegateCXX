@@ -1,5 +1,5 @@
 # FunctorDelegateCXX
-Fast Delegate C++ for Urus. Base source from http://www.codeproject.com/KB/cpp/FastFunctor.aspx
+Fast Delegate C++ for Urus. Base source from https://www.codeproject.com/Articles/7150/Member-Function-Pointers-and-the-Fastest-Possible
 
 # About
 This is a fast delegate C++ for Urus SHAL for backward compatibilities with APM 2.x Boards.
